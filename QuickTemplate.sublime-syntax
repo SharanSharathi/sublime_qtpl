@@ -1,0 +1,184 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/syntax.html
+
+# https://github.com/valyala/quicktemplate
+name: QuickTemplate (Go)
+file_extensions: [qtpl]
+scope: source.qtpl
+first_line_match: '{%.*%}'
+
+variables:
+  # scope: keyword.declaration
+  declareKeyword: code|func|endfunc|package|interface|iface
+  # scope: keyword.control
+  controlKeyword: switch|case|default|endswitch|if|elseif|else|endif|for|break|continue|endfor|import|return 
+  # scope: keyword.other
+  otherKeyword: plain|endplain|stripspace|endstripspace|collapsespace|endcollapsespace|comment|endcomment|cat|space|newline
+
+  openSymbol: '{%(-)?'
+  openFormatSymbol: '{%(-)?(s|v|du?l?|f.?[0-9]*|q|z|j|u|sz|qz|jz|uz)(=)?'
+  openFuncCallSymbol: '{%(-)?(=)(h|uh?|qh?|jh?)?'
+  closeSymbol: '(-)?%}'
+
+contexts:
+  main:
+    - include: openFormat
+    - include: openFuncCallSymbol
+    - include: open
+    - include: close
+
+    # - include: global_comment
+
+  openFormat: 
+    - meta_scope: punctuation.section.braces.begin
+    - match: '{{openFormatSymbol}}'
+      captures:
+        1: keyword.operator.stripspace.qtpl 
+        2: constant.other.placeholder.qtpl
+        3: keyword.operator.unescape.qtpl
+      embed: scope:source.go 
+      escape: '(?={{closeSymbol}})'
+
+  openFuncCallSymbol:
+    - meta_scope: punctuation.section.braces.begin
+    - match: '{{openFuncCallSymbol}}'
+      captures:
+        1: keyword.operator.stripspace.qtpl 
+        2: keyword.operator.unescape.qtpl
+        3: constant.other.placeholder.qtpl 
+      embed: scope:source.go 
+      escape: '(?={{closeSymbol}})'
+
+  open: 
+    - meta_scope: punctuation.section.braces.begin
+    - match: '{{openSymbol}}'
+      captures:
+        1: keyword.operator.stripspace.qtpl 
+      push: matchKeywords
+
+  close:
+    - meta_scope: punctuation.section.braces.end
+    - match: '{{closeSymbol}}'
+      captures:
+        1: keyword.operator.stripspace.qtpl 
+
+  popOnClose:
+    - match: '{{closeSymbol}}'
+      captures:
+        1: keyword.operator.stripspace.qtpl 
+      pop: true
+
+  matchKeywords:
+    - include: popOnClose
+
+    - match: '(?=\bfunc\b)' 
+      set: 
+        - match: '{{closeSymbol}}'
+          captures:
+            1: keyword.operator.stripspace.qtpl 
+          set: function_block
+        - match: ''
+          embed: scope:source.go 
+          escape: '(?<=\))\s*(?=[^\s])(\(?[^()]*\)?)(?<=[^\s-])\s*(?=-?%})|(?=-?%})'
+          escape_captures: 
+            1: invalid.illegal.return.qtpl
+
+    - match: '\bcomment\b'
+      captures:
+        0: keyword.other.comment.qtpl
+      set: 
+        - match: '{{closeSymbol}}'
+          captures:
+            1: keyword.operator.stripspace.qtpl 
+          set: comment 
+
+    - match: '\bplain\b'
+      captures:
+        0: keyword.other.plain.qtpl
+      set: 
+        - match: '{{closeSymbol}}'
+          captures:
+            1: keyword.operator.stripspace.qtpl 
+          set: plain
+
+    - match: '\b(code|iface)\b'
+      captures: 
+        0: keyword.declaration.qtpl
+      set: goscope
+
+    - match: '(?=\b(?>switch|case|if|for|import|package|interface)\b)'
+      set: goscope
+
+    - match: '\belseif\b'
+      captures:
+        0: keyword.control.elseif.qtpl
+      set: goscope
+
+    - match: '\bcat\b'
+      captures: 
+        0: keyword.other.cat.qtpl
+      set: double_quoted_string
+
+    - match: '\b{{declareKeyword}}\b'
+      captures:
+        0: keyword.declaration.qtpl
+      set: popOnClose
+
+    - match: '\b{{controlKeyword}}\b'
+      captures:
+        0: keyword.control.qtpl
+      set: popOnClose
+
+    - match: '\b{{otherKeyword}}\b'
+      captures:
+        0: keyword.other.qtpl
+      set: popOnClose
+
+    - match: '\b(.+?)\b'
+      captures:
+        1: invalid.illegal.keyword.qtpl
+      set: popOnClose
+
+  goscope:
+    - match: ''
+      embed: scope:source.go 
+      escape: '(?={{closeSymbol}})' 
+      pop: true
+
+  function_block:
+    - meta_content_scope: meta.block.func.qtpl
+    - match: '(?={{openSymbol}}\s*endfunc\s*{{closeSymbol}})'
+      pop: true
+    - include: openFormat
+    - include: openFuncCallSymbol
+    - include: open
+    - include: close
+    - match: '(?<=^|%})(?>(?!{%).(?<!%}))+(?={%|$)'
+      scope: string.unquoted.generate.qtpl 
+
+  comment: 
+    - meta_content_scope: comment.block.qtpl
+    - match: '(?={{openSymbol}}\s*endcomment\s*{{closeSymbol}})'
+      pop: true
+
+  plain:
+    - meta_content_scope: string.unquoted.plain.qtpl
+    - match: '(?={{openSymbol}}\s*endplain\s*{{closeSymbol}})'
+      pop: true
+
+  double_quoted_string:
+    - match: '(?={{closeSymbol}})' 
+      pop: true
+    - match: '"'
+      push: 
+        - meta_scope: string.quoted.double.qtpl
+        - match: \\.
+          scope: constant.character.escape.qtpl
+        - match: '"'
+          pop: 2
+
+  global_comment:
+    - match: '^(?>(?!{%.+%}).)*$'
+      scope: comment.line.global.qtpl
+

@@ -1,0 +1,39 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/syntax.html
+scope: output.qtpl
+hidden: true
+contexts:
+  main:
+    - include: double_quoted_string
+    - include: qtc_error
+    - include: go_build_output
+
+  qtc_error:
+    - match: "^(qtc):(?>.*?(error))?"
+      captures: 
+        1: keyword.compiler.qtc
+        2: keyword.error.qtc
+
+  go_build_output:
+    - match: "^# (.+)$"
+      captures: 
+        1: string.package.qtpl
+    - match: '^(?!\s)(.+?)(?<!\d):(\d+):(\d*):?(?>([^:\d]*):)?'
+      captures: 
+        1: entity.name.file.qtpl
+        2: constant.numeric.line-number.qtpl
+        3: constant.numeric.column.qtpl
+        4: keyword.error.qtpl
+
+  double_quoted_string:
+    - match: '"'
+      scope: punctuation.definition.string.begin
+      push:
+        - meta_scope: string.quoted.double
+        - match: '\\.'
+          scope: constant.character.escape
+        - match: '"'
+          scope: punctuation.definition.string.end
+          pop: true
+

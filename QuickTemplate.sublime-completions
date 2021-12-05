@@ -1,0 +1,337 @@
+{
+	"scope": "source.qtpl",
+	"completions": [
+		// tags
+		{
+			"trigger": "t/" ,
+			"contents": "{%$1 %}$0",
+			"annotation": "{%  %}",
+		},
+		{
+			"trigger": "t-" ,
+			"contents": "{%-$1 -%}$0" ,
+			"annotation": "{%-  -%}",
+		},
+		{
+			"trigger": "t=" ,
+			"contents": "{%= $1 %}$0" ,
+			"annotation": "{%=  %}",
+		},
+		{
+			"trigger": "t-=" ,
+			"contents": "{%-= $1 -%}$0" ,
+			"annotation": "{%-=  -%}",
+		},
+		// keywords
+		{
+			"trigger": "func" ,
+			"contents": "{% func ${1:name}($2) %}$0\n{% endfunc %}" ,
+			"annotation": "template function",
+		},
+		{
+			"trigger": "func-" ,
+			"contents": "{%- func ${1:name}($2) -%}$0\n{%- endfunc -%}" ,
+			"annotation": "template function",
+		},
+		{
+			"trigger": "endfunc" ,
+			"contents": "{% endfunc %}" ,
+			"annotation": "{% endfunc %}" ,
+		},
+		{
+			"trigger": "endfunc-" ,
+			"contents": "{%- endfunc -%}" ,
+			"annotation": "{%- endfunc -%}" ,
+		},
+		{
+			"trigger": "code" ,
+			"contents": "{% code $1 %}\n$0" ,
+			"annotation": "go code",
+		},
+		{
+			"trigger": "code-" ,
+			"contents": "{%- code $1 -%}\n$0" ,
+			"annotation": "go code",
+		},
+		{
+			"trigger": "package" ,
+			"contents": "{% package $1 %}\n$0" ,
+			"annotation": "package name",
+		},
+		{
+			"trigger": "interface" ,
+			"contents": "{% interface %1 \n%}$0" ,
+			"annotation": "{% interface %}",
+		},
+		{
+			"trigger": "iface" ,
+			"contents": "{% iface %1 \n%}$0" ,
+			"annotation": "{% iface %}",
+		},
+		{
+			"trigger": "switch" ,
+			"contents": "{% switch ${1:name} %}\n{% case ${2:type} %}\n\t$3\n{% default %}\n\t$4\n{% endswitch %}$0" ,
+			"annotation": "{% switch %}",
+		},
+		{
+			"trigger": "switch-" ,
+			"contents": "{%- switch ${1:name} -%}\n{%- case ${2:type} -%}\n\t$3\n{%- default -%}\n\t$4\n{%- endswitch -%}$0" ,
+			"annotation": "{%- switch -%}",
+		},
+		{
+			"trigger": "case" ,
+			"contents": "{% case ${1:type} %}\n\t$0" ,
+			"annotation": "{% case %}",
+		},
+		{
+			"trigger": "case-" ,
+			"contents": "{%- case ${1:type} -%}\n\t$0" ,
+			"annotation": "{%- case -%}",
+		},
+		{
+			"trigger": "default" ,
+			"contents": "{% default %}\n\t$0" ,
+			"annotation": "{% default %}",
+		},
+		{
+			"trigger": "default-" ,
+			"contents": "{%- default -%}\n\t$0" ,
+			"annotation": "{%- default -%}",
+		},
+		{
+			"trigger": "endswitch" ,
+			"contents": "{% endswitch %}" ,
+			"annotation": "{% endswitch %}" ,
+		},
+		{
+			"trigger": "endswitch-" ,
+			"contents": "{%- endswitch -%}" ,
+			"annotation": "{%- endswitch -%}" ,
+		},
+		{
+			"trigger": "if" ,
+			"contents": "{% if ${1:case} %}\n\t$0\n{% endif %}" ,
+			"annotation": "{% if %}",
+		},
+		{
+			"trigger": "if-" ,
+			"contents": "{%- if ${1:case} -%}\n\t$0\n{%- endif -%}" ,
+			"annotation": "{%- if -%}",
+		},
+		{
+			"trigger": "elseif" ,
+			"contents": "{% elseif ${1:case} %}\n\t$0" ,
+			"annotation": "{% elseif %}",
+		},
+		{
+			"trigger": "elseif-" ,
+			"contents": "{%- elseif ${1:case} -%}\n\t$0" ,
+			"annotation": "{%- elseif -%}",
+		},
+		{
+			"trigger": "else" ,
+			"contents": "{% else %}\n\t$0" ,
+			"annotation": "{% else %}" ,
+		},
+		{
+			"trigger": "else-" ,
+			"contents": "{%- else -%}\n\t$0" ,
+			"annotation": "{%- else -%}" ,
+		},
+		{
+			"trigger": "endif" ,
+			"contents": "{% endif %}" ,
+			"annotation": "{% endif %}" ,
+		},
+		{
+			"trigger": "endif-" ,
+			"contents": "{%- endif -%}" ,
+			"annotation": "{%- endif -%}" ,
+		},
+		{
+			"trigger": "for" ,
+			"contents": "{% for ${1:case} %}\n\t$0\n{% endfor %}" ,
+			"annotation": "{% for %}",
+		},
+		{
+			"trigger": "for-" ,
+			"contents": "{%- for ${1:case} -%}\n\t$0\n{%- endfor -%}" ,
+			"annotation": "{%- for -%}",
+		},
+		{
+			"trigger": "fori" ,
+			"contents": "{% for ${1:i} := 0; ${1:i} < ${2:var}; ${1:i}++ %}\n\t$0\n{% endfor %}" ,
+			"annotation": "{% for i := 0; i < var; i++ %}",
+		},
+		{
+			"trigger": "fori-" ,
+			"contents": "{%- for ${1:i} := 0; ${1:i} < ${2:var}; ${1:i}++ -%}\n\t$0\n{%- endfor -%}" ,
+			"annotation": "{%- for i := 0; i < var; i++ -%}",
+		},
+		{
+			"trigger": "forr" ,
+			"contents": "{% for ${3:_}, ${2:var} := range ${1:var} %}\n\t$0\n{% endfor %}" ,
+			"annotation": "{% for _, var := range var %}",
+		},
+		{
+			"trigger": "forr-" ,
+			"contents": "{%- for ${3:_}, ${2:var} := range ${1:var} -%}\n\t$0\n{%- endfor -%}" ,
+			"annotation": "{%- for _, var := range var -%}",
+		},
+		{
+			"trigger": "break" ,
+			"contents": "{% break %}" ,
+			"annotation": "{% break %}" ,
+		},
+		{
+			"trigger": "break-" ,
+			"contents": "{%- break -%}" ,
+			"annotation": "{%- break -%}" ,
+		},
+		{
+			"trigger": "continue" ,
+			"contents": "{% continue %}" ,
+			"annotation": "{% continue %}" ,
+		},
+		{
+			"trigger": "continue-" ,
+			"contents": "{%- continue -%}" ,
+			"annotation": "{%- continue -%}" ,
+		},
+		{
+			"trigger": "return" ,
+			"contents": "{% return %}" ,
+			"annotation": "{% return %}" ,
+		},
+		{
+			"trigger": "return-" ,
+			"contents": "{%- return -%}" ,
+			"annotation": "{%- return -%}" ,
+		},
+		{
+			"trigger": "endfor" ,
+			"contents": "{% endfor %}" ,
+			"annotation": "{% endfor %}" ,
+		},
+		{
+			"trigger": "endfor-" ,
+			"contents": "{%- endfor -%}" ,
+			"annotation": "{%- endfor -%}" ,
+		},
+		{
+			"trigger": "import" ,
+			"contents": "{% import \"$1\" %}" ,
+			"annotation": "{% import %}" ,
+		},
+		{
+			"trigger": "plain" ,
+			"contents": "{% plain %}$1\n{% endplain %}" ,
+			"annotation": "{% plain %}" ,
+		},
+		{
+			"trigger": "plain-" ,
+			"contents": "{%- plain -%}$1\n{%- endplain -%}" ,
+			"annotation": "{%- plain -%}" ,
+		},
+		{
+			"trigger": "endplain" ,
+			"contents": "{% endplain %}" ,
+			"annotation": "{% endplain %}" ,
+		},
+		{
+			"trigger": "endplain-" ,
+			"contents": "{%- endplain -%}" ,
+			"annotation": "{%- endplain -%}" ,
+		},
+		{
+			"trigger": "stripspace" ,
+			"contents": "{% stripspace %}$1\n{% endstripspace %}" ,
+			"annotation": "{% stripspace %}" ,
+		},
+		{
+			"trigger": "stripspace-" ,
+			"contents": "{%- stripspace -%}$1\n{%- endstripspace -%}" ,
+			"annotation": "{%- stripspace -%}" ,
+		},
+		{
+			"trigger": "endstripspace" ,
+			"contents": "{% endstripspace %}" ,
+			"annotation": "{% endstripspace %}" ,
+		},
+		{
+			"trigger": "endstripspace-" ,
+			"contents": "{%- endstripspace -%}" ,
+			"annotation": "{%- endstripspace -%}" ,
+		},
+		{
+			"trigger": "collapsespace" ,
+			"contents": "{% collapsespace %}$1\n{% endcollapsespace %}" ,
+			"annotation": "{% collapsespace %}" ,
+		},
+		{
+			"trigger": "collapsespace-" ,
+			"contents": "{%- collapsespace -%}$1\n{%- endcollapsespace -%}" ,
+			"annotation": "{%- collapsespace -%}" ,
+		},
+		{
+			"trigger": "endcollapsespace" ,
+			"contents": "{% endcollapsespace %}" ,
+			"annotation": "{% endcollapsespace %}" ,
+		},
+		{
+			"trigger": "endcollapsespace-" ,
+			"contents": "{%- endcollapsespace -%}" ,
+			"annotation": "{%- endcollapsespace -%}" ,
+		},
+		{
+			"trigger": "comment" ,
+			"contents": "{% comment %}$1\n{% endcomment %}" ,
+			"annotation": "{% comment %}" ,
+		},
+		{
+			"trigger": "comment-" ,
+			"contents": "{%- comment -%}$1\n{%- endcomment -%}" ,
+			"annotation": "{%- comment -%}" ,
+		},
+		{
+			"trigger": "endcomment" ,
+			"contents": "{% endcomment %}" ,
+			"annotation": "{% endcomment %}" ,
+		},
+		{
+			"trigger": "endcomment-" ,
+			"contents": "{%- endcomment -%}" ,
+			"annotation": "{%- endcomment -%}" ,
+		},
+		{
+			"trigger": "space" ,
+			"contents": "{% space %}" ,
+			"annotation": "{% space %}" ,
+		},
+		{
+			"trigger": "space-" ,
+			"contents": "{%- space -%}" ,
+			"annotation": "{%- space -%}" ,
+		},
+		{
+			"trigger": "newline" ,
+			"contents": "{% newline %}" ,
+			"annotation": "{% newline %}" ,
+		},
+		{
+			"trigger": "newline-" ,
+			"contents": "{%- newline -%}" ,
+			"annotation": "{%- newline -%}" ,
+		},
+		{
+			"trigger": "cat" ,
+			"contents": "{% cat \"$1\" %}" ,
+			"annotation": "{% cat %}" ,
+		},
+		{
+			"trigger": "cat-" ,
+			"contents": "{%- cat \"$1\" -%}" ,
+			"annotation": "{%- cat -%}" ,
+		},
+	]
+}

@@ -1,0 +1,32 @@
+{
+	"file_patterns": ["*.qtpl"],
+	"working_dir": "$file_path",
+	"shell_cmd": "qtc -file $file_name",
+	"variants":[
+		{
+			"name": "Compile File",
+			"shell_cmd": "qtc -file $file_name ; go build -v -o build_qtpl_binary . ; rm -f build_qtpl_binary ; echo completed!",
+			"windows": {
+				"shell_cmd": "qtc -file $file_name ; go build -v -o build_qtpl_binary.exe . ; del /f /q build_qtpl_binary.exe ; echo completed!",				
+			},
+		},
+		{
+			"name": "Compile Dir",
+			"shell_cmd": "qtc -dir . ; go build -v -o build_qtpl_binary . ; rm -f build_qtpl_binary ; echo completed!",
+			"windows": {
+				"shell_cmd": "qtc -dir . ; go build -v -o build_qtpl_binary.exe . ; del /f /q build_qtpl_binary.exe ; echo completed!",				
+			},
+		},
+		{
+			"name": "Compile Dir without Line comments",
+			"shell_cmd": "qtc -skipLineComments -dir . ; go build -v -o build_qtpl_binary . ; rm -f build_qtpl_binary ; echo completed!",
+			"windows": {
+				"shell_cmd": "qtc -skipLineComments -dir . ; go build -v -o build_qtpl_binary.exe . ; del /f /q build_qtpl_binary.exe ; echo completed!",				
+			},
+		},
+	],
+	"file_regex": "^(?!\\s)(.+?)(?<!\\d):(\\d+):(\\d*):?(.*)$",
+	"quiet": true,
+	"word_wrap": false,
+	"syntax": "Packages/QuickTemplate (Go)/QuickTemplateBuild.sublime-syntax",
+}
